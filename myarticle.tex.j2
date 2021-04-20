@@ -1,0 +1,121 @@
+% Default to the notebook output style
+((* if not cell_style is defined *))
+    ((* set cell_style = 'style_ipython.tex.j2' *))
+((* endif *))
+
+% Inherit from the specified cell style.
+((* extends cell_style *))
+
+% Change images max size
+((*- block figure scoped -*))
+    \begin{center}
+    \adjustimage{max size={0.5\linewidth}{0.3\paperheight}}{((( filename )))}
+    \end{center}
+    { \hspace*{\fill} \\}
+((*- endblock figure -*))
+
+%===============================================================================
+% Latex Article
+%===============================================================================
+
+((* block docclass *))
+\documentclass{article}
+((* endblock docclass *))
+
+%===============================================================================
+% Paquetes
+%===============================================================================
+
+((* block packages *))
+((( super() )))
+\usepackage{listings} % `listings` es para insertar los codigo fuente
+((* endblock packages *))
+
+((* block commands *))
+((( super() )))
+\captionsetup{justification=centering,labelsep=period,font={small},%
+labelfont=bf,textfont=it}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\abstractname}{Resumen}
+\renewcommand{\refname}{Referencias}
+\let\originalcite\cite
+\renewcommand{\cite}[2][]{\textsuperscript{\originalcite{#2}}}
+% Cambiamos el estilo de las citas bibliograficas
+\makeatletter\let\@afterindentfalse\@afterindenttrue\makeatother
+% Para indentar primer parrafo
+\setcounter{secnumdepth}{0}
+% No se numeran las secciones pero si estan en el TOC 
+\makeatletter\let\@afterindentfalse\@afterindenttrue\makeatother
+% Cambiamos \@afterindentfalse por \@afterindenttrue para indentar primer parrafo
+\let\originalappendix\appendix
+\renewcommand{\appendix}{%
+\newpage\originalappendix\pagenumbering{gobble}%
+% Empezar apéndices en nueva pagina sin numeracion
+\renewcommand\thesection{Anexo \Alph{section}}
+% `thesection` es como se numeran los apendices
+\setcounter{secnumdepth}{1}
+% Contarlas secciones de apendice
+}%
+\lstdefinestyle{mystyle}{
+    keywordstyle=\bf,
+    numberstyle=\small,
+    basicstyle=\ttfamily\normalsize,
+    numbers=left
+}
+\lstset{style=mystyle}
+((* endblock commands *))
+
+((* block title *))
+\title{Trabajo Práctico\\``Errores de redondeo\\y propagación de errores''}
+((* endblock title *))
+((* block date *))
+\date{1er. Cuatrimestre 2021\\Sábado, 10 de Abril}
+((* endblock date *))
+((* block author *))
+\author{Araneda, Alejandro – eloscurodeefeso@hotmail.com}
+\def\teacher{Dr. Lic. Verónica Moreno}
+\def\curse{Análisis Numérico}
+((* endblock author *))
+
+
+((* block maketitle *))
+\begin{titlepage}\renewcommand\and\par\centering\makeatletter
+    \includegraphics{logo.png}\par
+    {\Large Ingeniería en Computación \par}\vspace{0.5cm}
+    {\LARGE \curse \par}\vfill
+    {\huge \@title \par}\vfill
+    Alumno:\par
+    \@author\vfill
+    Práctica entregada:\par
+    \@date\vfill
+    Docente:\par
+    \teacher\vspace{1cm}\makeatother
+\end{titlepage}
+((* endblock maketitle *))
+
+%===============================================================================
+% Input
+%===============================================================================
+
+% Esconder las celdas de codigo con la metadata hide_input=true
+
+((* block input scoped *))
+((*- if cell.metadata.hide_input: -*))
+((*- else -*))
+   ((( super() )))
+((*- endif *))
+((* endblock input *))
+
+
+((* block postdoc *))
+\appendix
+
+\section{}\label{ane:monitoreo}
+A continuación listamos en extenso el módulo de Python que
+contiene la función auxiliar {\ttfamily tabla()}.
+
+\lstinputlisting[language=Python]{auxiliares.py}
+
+   ((( super() )))
+((* endblock postdoc *))
