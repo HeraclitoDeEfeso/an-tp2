@@ -42,3 +42,10 @@ def tabla(filas, encabezados, funciones=None):
             + "".join(["|" + "|".join(map(str, f)) + "|\n" for f in filas])
         )
     )
+
+
+def format_vec(vec):
+    return "[{0:.3f}, {1:.3f}, {2:.3f}]".format(*vec)
+
+def format_err(e):
+    return "{0:.3E}".format(e)
