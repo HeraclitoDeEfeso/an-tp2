@@ -45,7 +45,26 @@ def tabla(filas, encabezados, funciones=None):
 
 
 def format_vec(vec):
+    """
+    Da formato a un vector de flotantes para su visualización
+
+    :param vec: iterable de tres elementos
+    :type vec: list[float]
+    :return: cadena de caracteres conteniendo tres flotantes
+	con hasta 3 decimales, todo entre corchetes
+    :rtype: str
+    """
     return "[{0:.3f}, {1:.3f}, {2:.3f}]".format(*vec)
 
+
 def format_err(e):
+    """
+    Da formato a un flotantes con notación científica
+
+    :param e: el número flotante a formatear
+    :type e: float
+    :return: cadena de caracteres conteniendo el flotante
+	con hasta 3 decimales en notación científica
+    :rtype: str
+    """
     return "{0:.3E}".format(e)
